@@ -23,6 +23,7 @@ set paste "proper formatting of pasted text
 set linespace=0 " don't insert any extra pixel lines betweens rows
 set lines=50
 set columns=160
+set laststatus=2
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
@@ -133,9 +134,31 @@ set ai
 set ts=4
 set sw=4
 
-autocmd BufWritePre *.* :%s/\s\+$//e
+autocmd BufWritePre *.* :%s/$//e
 
+"let g:selBufUseVerticalSplit = 1
+"let g:selBufSplitType = "topleft"
+"let g:selBufAlwaysShowPaths=0
+let g:selBufBrowserMode='switch'
 
-let g:selBufUseVerticalSplit = 1
-let g:selBufSplitType = "topleft"
+" quickfix
+let qfix_toggle=12
+" toggles the quickfix window.
+command -bang -nargs=? QFix call QFixToggle(<bang>0)
+function! QFixToggle(forced)
+  if exists("g:qfix_win") && a:forced == 0
+    cclose
+  else
+    execute "copen " . g:qfix_toggle
+  endif
+endfunction
+
+" used to track the quickfix window
+augroup QFixToggle
+ autocmd!
+ autocmd BufWinEnter quickfix let g:qfix_win = bufnr("$")
+ autocmd BufWinLeave * if exists("g:qfix_win") && expand("<abuf>") == g:qfix_win | unlet! g:qfix_win | endif
+augroup END
+
+nmap <silent> <F4> :QFix<CR>
 
