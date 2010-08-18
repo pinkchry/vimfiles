@@ -60,7 +60,7 @@ let s:ccve_vars = {
                 \'env_f':$HOME . '/.symbs/.evn'
                 \},
             \'setting':{
-                \'tags_l':['./tags'],
+                \'tags_l':['tags;/'],
                 \'cscope.out_l':[{'idx':0}, {0:'noused'}]
                 \}
             \}
@@ -119,7 +119,7 @@ function! AddSymbs (symbs)
     "tags full path
     let l:symbs_t = s:ccve_vars[s:os]['HOME'] . s:ccve_vars[s:os]['slash'] . l:name . s:ccve_vars[s:os]['slash'] . 'tags'
 
-    echo l:symbs_t
+    "echo l:symbs_t
 
     if filereadable (l:symbs_t) == 0
         echomsg 'Tags not found'
@@ -165,7 +165,7 @@ function! AddSymbs (symbs)
         if s:ccve_debug == 'true'
             echo 'DEBUG: $TAGS_PATH:' . $TAGS_PATH
         endif
-        echo ':set tags=' . $TAGS_PATH
+        "echo ':set tags=' . $TAGS_PATH
         :set tags=$TAGS_PATH 
 
         if s:ccve_debug == 'true'
@@ -229,7 +229,7 @@ function! AddSymbs (symbs)
             "    let s:ccve_vars['setting']['cscope.out_l'][0]['idx'] = l:cpos + 1
             "endif
             let $CSCOPE_DB = l:symbs_c
-            echo ':cscope add ' . $CSCOPE_DB
+            "echo ':cscope add ' . $CSCOPE_DB
             :cs add $CSCOPE_DB
         else
             "cscope.out alread set
@@ -297,7 +297,7 @@ function! DelSymbs (symbs, rm)
     if s:ccve_debug == 'true'
         echo 'DEBUG: $TAGS_PATH:' . $TAGS_PATH
     endif
-    echo ':set tags=' . $TAGS_PATH
+    "echo ':set tags=' . $TAGS_PATH
     :set tags=$TAGS_PATH 
 
     """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -394,8 +394,8 @@ function! ExecCtags (list)
         echomsg 'Failed to create directory ' . s:ccve_vars[s:os]['HOME'] . '/' . substitute (getcwd (), '^.*' . s:ccve_vars[s:os]['slash'], '', 'g') . (MakeDirP returned false)'
         return 'false'
     endif
-    echo l:cmd
-    echo system (l:cmd)
+    "echo l:cmd
+	let ret = system (l:cmd)
     return 'true'
 endfunction
 "-----------------------------------------------------------------
@@ -419,8 +419,15 @@ function! ExecCscope (list)
                 \. substitute(getcwd (), '^.*' . s:ccve_vars[s:os]['slash'], '', 'g') 
                 \. s:ccve_vars[s:os]['slash']
                 \. 'cscope.out' 
-    echo l:cmd
-    echo system (l:cmd)
+	let cd = exists('*haslocaldir') && haslocaldir() ? 'lcd ' : 'cd '
+	let dir = getcwd()
+	try
+	  execute cd.s:ccve_vars[s:os]['HOME']
+	  "echo l:cmd
+	  let ret = system (l:cmd)
+	finally
+	  execute cd.'`=dir`'
+	endtry
     return 'true'
 endfunction
 
@@ -429,14 +436,14 @@ endfunction
 function! MakeList (dir)
     if 'true' == MakeDirP (s:ccve_vars[s:os]['HOME'])
         let l:cmd = g:ccve_funs.ListCmd[s:os](a:dir)
-        echomsg l:cmd
+        "echomsg l:cmd
         let l:list = system (l:cmd)
         call writefile (split(l:list), s:ccve_vars[s:os]['list_f'])
         "redir @a | silent! echo l:list | redir END
-        if input ('System Prompt: Do you want to view file list?  Press [y] yes [any key to continue] no : ') == "y"
-            "echo @a
-            echo l:list
-        endif
+        "if input ('System Prompt: Do you want to view file list?  Press [y] yes [any key to continue] no : ') == "y"
+        "    "echo @a
+        "    echo l:list
+        "endif
     endif
     return l:list
 endfunction
@@ -605,7 +612,7 @@ function! SynchronizeSource ()
     endif
 
     if l:res_t == 'true' || l:res_c == 'true'
-        echo s:ccve_vars[s:os]['env_f']
+        "echo s:ccve_vars[s:os]['env_f']
         call WriteConfig (s:ccve_vars[s:os]['env_f'], getcwd ())
     endif
 endfunction
@@ -644,7 +651,7 @@ if !exists(':CCC')
 endif
 
 "{{{Hotkey setup
-:map <Leader>sy :call TestFuncS() <CR>
+:map <silent> <Leader>sy :call TestFuncS() <CR>
 :map <Leader>sc :call TestFuncE() <CR>
 "}}}
 
