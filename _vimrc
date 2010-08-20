@@ -136,15 +136,13 @@ set sw=4
 
 autocmd BufWritePre *.* :%s/$//e
 
-"let g:selBufUseVerticalSplit = 1
-"let g:selBufSplitType = "topleft"
-"let g:selBufAlwaysShowPaths=0
-let g:selBufBrowserMode='switch'
+let g:miniBufExplMaxSize=3
+let g:miniBufExplorerMoreThanOne=3
 
 " quickfix
 let qfix_toggle=12
 " toggles the quickfix window.
-command -bang -nargs=? QFix call QFixToggle(<bang>0)
+command! -bang -nargs=? QFix call QFixToggle(<bang>0)
 function! QFixToggle(forced)
   if exists("g:qfix_win") && a:forced == 0
     cclose
@@ -160,5 +158,6 @@ augroup QFixToggle
  autocmd BufWinLeave * if exists("g:qfix_win") && expand("<abuf>") == g:qfix_win | unlet! g:qfix_win | endif
 augroup END
 
+nmap <silent> <F2> :TMiniBufExplorer<CR>
 nmap <silent> <F4> :QFix<CR>
 
