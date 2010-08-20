@@ -160,4 +160,5 @@ augroup END
 
 nmap <silent> <F2> :TMiniBufExplorer<CR>
 nmap <silent> <F4> :QFix<CR>
+nmap <silent> <F7> :call DTEBuildSolution()<CR>
 
