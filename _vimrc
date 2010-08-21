@@ -136,9 +136,6 @@ set sw=4
 
 autocmd BufWritePre *.* :%s/$//e
 
-let g:miniBufExplMaxSize=3
-let g:miniBufExplorerMoreThanOne=3
-
 " quickfix
 let qfix_toggle=12
 " toggles the quickfix window.
@@ -162,3 +159,4 @@ nmap <silent> <F2> :TMiniBufExplorer<CR>
 nmap <silent> <F4> :QFix<CR>
 nmap <silent> <F7> :call DTEBuildSolution()<CR>
 
+filetype plugin on
