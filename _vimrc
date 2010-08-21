@@ -12,7 +12,6 @@ set autochdir " always switch to the current file directory
 
 " Set to auto read when a file is changed from the outside
 set autoread
-set switchbuf=usetab
 
 set paste "proper formatting of pasted text
 
@@ -88,7 +87,8 @@ else
   set background=dark
 endif
 
-" convert to Unix on save
+set tags=tags;/
+
 autocmd BufWritePre *.* :%s/$//e
 
 " quickfix
@@ -143,5 +143,4 @@ map <C-Down> <Plug>unimpairedQNext
 
 map <C-Tab> <ESC>:tabn<cr>
 map <C-S-Tab> <ESC>:tabp<cr>
-
 
