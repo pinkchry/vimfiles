@@ -25,11 +25,10 @@ set lines=50
 set columns=160
 set laststatus=2
 
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-let mapleader = ","
-let g:mapleader = ","
-
+set nonumber
+set ai
+set tabstop=4
+set shiftwidth=4
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -60,80 +59,36 @@ set magic "Set magic on, for regular expressions
 
 set showmatch "Show matching bracets when text indicator is over them
 set matchtime=2 "How many tenths of a second to blink
+set nobackup
+set nowritebackup
+set noswapfile
+
+set showtabline=2
+
+set tags=tags;/
+set cscopequickfix=s-,c-,d-,i-,t-,e-
+
+set statusline=%F%m%r%h%w\ [fmt=%{&ff}]\ [type=%Y]\ [pos=%l,%v][%p%%]
+set guifont=Consolas:h10:cANSI
+
 
 " No sound on errors
 set noerrorbells
 set novisualbell
-set t_vb=
 
 syntax enable "Enable syntax hl
 
 if has("gui_running")
   set guioptions-=T
   set background=dark
-  set t_Co=256
   set background=dark
   colorscheme biogoo
-
-  set nu
 else
   colorscheme zellner
   set background=dark
-
-  set nonu
 endif
 
-" Turn backup off, since most stuff is in SVN, git anyway...
-set nobackup
-set nowb
-set noswapfile
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabs and buffers
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Map space to / (search) and c-space to ? (backgwards search)
-map <space> /
-map <c-space> ?
-map <silent> <leader><cr> :noh<cr>
-
-" Smart way to move btw. windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
-map <M-down> <C-W>j
-map <M-up> <C-W>k
-map <M-left> <ESC>:bp<cr>
-map <M-right> <ESC>:bn<cr>
-
-" Use the arrows to something usefull
-map <C-Tab> <ESC>:tabn<cr>
-map <C-S-Tab> <ESC>:tabp<cr>
-
-" Specify the behavior when switching between buffers
-try
-  set switchbuf=usetab
-  set stal=2
-catch
-endtry
-
-set tags=tags;/
-
-set statusline=%F%m%r%h%w\ [fmt=%{&ff}]\ [type=%Y]\ [pos=%l,%v][%p%%]
-
-"map <leader>ff :FufFile **/<CR>
-map <leader>ff :FufFile <CR>
-map <leader>ft :FufTag <CR>
-map <leader>fb :FufBuffer <CR>
-map <leader>fl :FufLine <CR>
-
-set guifont=Consolas:h10:cANSI
-
-set nonumber
-set ai
-set ts=4
-set sw=4
-
+" convert to Unix on save
 autocmd BufWritePre *.* :%s/$//e
 
 " quickfix
@@ -155,8 +110,38 @@ augroup QFixToggle
  autocmd BufWinLeave * if exists("g:qfix_win") && expand("<abuf>") == g:qfix_win | unlet! g:qfix_win | endif
 augroup END
 
-nmap <silent> <F2> :TMiniBufExplorer<CR>
+
+" With a map leader it's possible to do extra key combinations
+" like <leader>w saves the current file
+let mapleader = ","
+let g:mapleader = ","
+
+"nmap <silent> <F2> :TMiniBufExplorer<CR>
 nmap <silent> <F4> :QFix<CR>
 nmap <silent> <F7> :call DTEBuildSolution()<CR>
+nmap <silent> <C-F7> :call DTECompileFile()<CR>
 
-filetype plugin on
+"map <leader>ff :FufFile **/<CR>
+map <leader>ff :FufFile <CR>
+map <leader>ft :FufTag <CR>
+map <leader>fb :FufBuffer <CR>
+map <leader>fl :FufLine <CR>
+
+map <silent> <leader><cr> :noh<cr>
+
+" move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+map <M-down> <C-W>j
+map <M-up> <C-W>k
+map <M-left> <ESC>:bp<cr>
+map <M-right> <ESC>:bn<cr>
+map <C-Up> <Plug>unimpairedQPrevious
+map <C-Down> <Plug>unimpairedQNext
+
+map <C-Tab> <ESC>:tabn<cr>
+map <C-S-Tab> <ESC>:tabp<cr>
+
+
