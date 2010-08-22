@@ -74,6 +74,7 @@ set guifont=Consolas:h10:cANSI
 " No sound on errors
 set noerrorbells
 set novisualbell
+set shortmess=atI
 
 syntax enable "Enable syntax hl
 
@@ -87,7 +88,7 @@ else
   set background=dark
 endif
 
-autocmd BufWritePre *.* :%s/$//e
+"autocmd BufWritePre *.* :%s/$//e
 
 " quickfix
 let qfix_toggle=12
@@ -114,18 +115,25 @@ augroup END
 let mapleader = ","
 let g:mapleader = ","
 
-"nmap <silent> <F2> :TMiniBufExplorer<CR>
+nmap <silent> <F2> :NERDTreeToggle<CR>
 nmap <silent> <F4> :QFix<CR>
 nmap <silent> <F7> :call DTEBuildSolution()<CR>
 nmap <silent> <C-F7> :call DTECompileFile()<CR>
 
-"map <leader>ff :FufFile **/<CR>
+map <leader>fr :FufFile **/<CR>
 map <leader>ff :FufFile <CR>
-map <leader>ft :FufTag <CR>
 map <leader>fb :FufBuffer <CR>
 map <leader>fl :FufLine <CR>
+map <leader>fm :FufMruFile <CR>
+map <leader>f: :FufMruCmd <CR>
+map <leader>fc :FufChangeList<CR>
+map <leader>fj :FufJumpList<CR>
+map <leader>fq :FufQuickfix<CR>
+map <leader>fF :FufTaggedFile <CR>
+map <leader>ft :FufTag <CR>
 
-map <silent> <leader><cr> :noh<cr>
+"Turn off highlighting
+nnoremap <esc><esc> :noh<cr>
 
 " move between windows
 map <C-j> <C-W>j
@@ -142,3 +150,10 @@ map <C-Down> <Plug>unimpairedQNext
 map <C-Tab> <ESC>:tabn<cr>
 map <C-S-Tab> <ESC>:tabp<cr>
 
+"Tips
+"Hex editor
+"::set binary<CR>:%!xxd<CR>
+":%!xxd -r<CR>
+"
+":perldo $_ = join ' ', reverse split
+"

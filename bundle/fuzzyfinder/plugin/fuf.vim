@@ -27,7 +27,7 @@ function s:initialize()
         \   'givenfile', 'givendir', 'givencmd',
         \   'callbackfile', 'callbackitem',
         \ ])
-  call s:defineOption('g:fuf_modesDisable'     , [ 'mrufile', 'mrucmd', ])
+  call s:defineOption('g:fuf_modesDisable'     , [])
   call s:defineOption('g:fuf_keyOpen'          , '<CR>')
   call s:defineOption('g:fuf_keyOpenSplit'     , '<C-j>')
   call s:defineOption('g:fuf_keyOpenVsplit'    , '<C-k>')
