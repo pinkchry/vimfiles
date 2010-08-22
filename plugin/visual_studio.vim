@@ -45,7 +45,7 @@ if ! exists ('g:visual_studio_find_results_2')
     let g:visual_studio_find_results_2 = $TEMP.'\\vs_find_results_2.txt'
 endif
 if ! exists ('g:visual_studio_quickfix_height')
-    let g:visual_studio_quickfix_height = 20
+    let g:visual_studio_quickfix_height = 10
 endif
 if ! exists ('g:visual_studio_quickfix_errorformat_cpp')
     let g:visual_studio_quickfix_errorformat_cpp = '%\\d%\\*>\ %#%f(%l)\ :\ %m,\ %#%f(%l)\ :\ %m'

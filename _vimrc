@@ -118,7 +118,7 @@ let g:mapleader = ","
 nmap <silent> <F2> :NERDTreeToggle<CR>
 nmap <silent> <F4> :QFix<CR>
 nmap <silent> <F7> :call DTEBuildSolution()<CR>
-nmap <silent> <C-F7> :call DTECompileFile()<CR>
+nmap <silent> <C-F7> :call DTECompileFile()<CR>:cclose<CR>
 
 map <leader>fr :FufFile **/<CR>
 map <leader>ff :FufFile <CR>
