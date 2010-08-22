@@ -65,7 +65,7 @@ set noswapfile
 set showtabline=2
 
 set tags=tags;/
-set cscopequickfix=s-,c-,d-,i-,t-,e-
+set cscopequickfix=s-,g-,c-,d-,i-,t-,e-
 
 set statusline=%F%m%r%h%w\ [fmt=%{&ff}]\ [type=%Y]\ [pos=%l,%v][%p%%]
 set guifont=Consolas:h10:cANSI
@@ -86,8 +86,6 @@ else
   colorscheme zellner
   set background=dark
 endif
-
-set tags=tags;/
 
 autocmd BufWritePre *.* :%s/$//e
 
