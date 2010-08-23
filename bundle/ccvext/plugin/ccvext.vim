@@ -80,11 +80,11 @@ else
     let s:os = 'unix'
 endif
 
-"let s:postfix = ['"*.java"']
-"let s:postfix = ['"*.py"']
-"let s:postfix = ['"*.html"', '"*.xml"']
-"let s:postfix = ['"*.java"', '"*.h"', '"*.c"', '"*.hpp"', '"*.cpp"', '"*.cc"']
-let s:postfix = ['"*.java"', '"*.py"', '"*.h"', '"*.c"', '"*.hpp"', '"*.cpp"', '"*.cc"']
+"let g:ccve_patterns = ['"*.java"']
+"let g:ccve_patterns = ['"*.py"']
+"let g:ccve_patterns = ['"*.html"', '"*.xml"']
+"let g:ccve_patterns = ['"*.java"', '"*.h"', '"*.c"', '"*.hpp"', '"*.cpp"', '"*.cc"']
+let g:ccve_patterns = ['"*.java"', '"*.py"', '"*.h"', '"*.c"', '"*.hpp"', '"*.cpp"', '"*.cc"']
 
 "Exame software environment {{{
 if !executable ('ctags')
@@ -377,21 +377,21 @@ endfunction
 
 "-----------------------------------------------------------------
 "Generate tags files
-function! ExecCtags (list)
+function! ExecCtags (dir, list)
     if (!executable ('ctags'))
         return 'false'
     endif
     let l:cmd = 'ctags -f ' 
                 \. s:ccve_vars[s:os]['HOME'] 
                 \. s:ccve_vars[s:os]['slash'] 
-                \. substitute(getcwd (), '^.*' . s:ccve_vars[s:os]['slash'], '', 'g') 
+                \. substitute(a:dir, '^.*' . s:ccve_vars[s:os]['slash'], '', 'g') 
                 \. s:ccve_vars[s:os]['slash'] . 'tags ' 
                 \. '-R --c++-kinds=+p --fields=+aiS --extra=+q --tag-relative=no' 
                 \. ' -L ' 
                 \. s:ccve_vars[s:os]['list_f']
 
-    if 'false' == MakeDirP(s:ccve_vars[s:os]['HOME'] . s:ccve_vars[s:os]['slash'] . substitute(getcwd (), '^.*' . s:ccve_vars[s:os]['slash'], '', 'g'))
-        echomsg 'Failed to create directory ' . s:ccve_vars[s:os]['HOME'] . '/' . substitute (getcwd (), '^.*' . s:ccve_vars[s:os]['slash'], '', 'g') . (MakeDirP returned false)'
+    if 'false' == MakeDirP(s:ccve_vars[s:os]['HOME'] . s:ccve_vars[s:os]['slash'] . substitute(a:dir, '^.*' . s:ccve_vars[s:os]['slash'], '', 'g'))
+        echomsg 'Failed to create directory ' . s:ccve_vars[s:os]['HOME'] . '/' . substitute (a:dir, '^.*' . s:ccve_vars[s:os]['slash'], '', 'g') . (MakeDirP returned false)'
         return 'false'
     endif
     "echo l:cmd
@@ -400,7 +400,7 @@ function! ExecCtags (list)
 endfunction
 "-----------------------------------------------------------------
 "Generate cscope files
-function! ExecCscope (list)
+function! ExecCscope (dir, list)
     if (!executable ('cscope'))
         return 'false'
     endif
@@ -416,17 +416,16 @@ function! ExecCscope (list)
                 \. ' ' 
                 \. s:ccve_vars[s:os]['HOME'] 
                 \. s:ccve_vars[s:os]['slash']
-                \. substitute(getcwd (), '^.*' . s:ccve_vars[s:os]['slash'], '', 'g') 
+                \. substitute(a:dir, '^.*' . s:ccve_vars[s:os]['slash'], '', 'g') 
                 \. s:ccve_vars[s:os]['slash']
                 \. 'cscope.out' 
 	let cd = exists('*haslocaldir') && haslocaldir() ? 'lcd ' : 'cd '
-	let dir = getcwd()
 	try
 	  execute cd.s:ccve_vars[s:os]['HOME']
 	  "echo l:cmd
 	  let ret = system (l:cmd)
 	finally
-	  execute cd.'`=dir`'
+	  execute cd.'`=a:dir`'
 	endtry
     return 'true'
 endfunction
@@ -452,9 +451,9 @@ endfunction
 "Generate shell command
 function! g:ccve_funs.ListCmd['win32'] (dir) dict
     let l:cmd = 'dir'
-    let l:cmd = l:cmd . ' ' . getcwd () . '\' . s:postfix[1]
-    for l:idx in s:postfix
-        let l:cmd = l:cmd . ' ' . getcwd () . '\' . l:idx
+    let l:cmd = l:cmd . ' ' . a:dir . '\' . g:ccve_patterns[1]
+    for l:idx in g:ccve_patterns
+        let l:cmd = l:cmd . ' ' . a:dir . '\' . l:idx
     endfor
     "remove all '"'
     let l:cmd = substitute(l:cmd, '"', '', 'g')
@@ -467,8 +466,8 @@ endfunction
 function! g:ccve_funs.ListCmd['unix'] (dir) dict
     "let l:cmd = '!' . 'find'
     let l:cmd = 'find'
-    let l:cmd = l:cmd . ' ' . a:dir . ' ' . '-name'. ' ' . s:postfix[1]
-    for l:idx in s:postfix
+    let l:cmd = l:cmd . ' ' . a:dir . ' ' . '-name'. ' ' . g:ccve_patterns[1]
+    for l:idx in g:ccve_patterns
         let l:cmd = l:cmd . ' ' . '-o -name' . ' ' . l:idx
     endfor
     return l:cmd
@@ -552,7 +551,7 @@ endfunction
 "-----------------------------------------------------------------
 "Show list window {{{
 function! EnvConfig (l)
-    let l:bname = "Help -- [a] Add to environment [d] Delete from environment [D] Delete from environment and remove conspond files"
+    let l:bname = "Help -- [a] Attach [d] Detach [D] Delete [r] Refresh [q] Quit"
     let l:winnum =  bufwinnr (l:bname)
     "If the list window is open
     if l:winnum != -1
@@ -584,37 +583,37 @@ function! EnvConfig (l)
     nnoremap <buffer><silent><CR> :call AddSymbs(getline('.')) <CR>
     nnoremap <buffer><silent>d :call DelSymbs(getline('.'), 'false') <CR>
     nnoremap <buffer><silent>D :call DelSymbs(getline('.'), 'true') <CR>
-    nnoremap <buffer><silent>r :call DelSymbs(getline('.'), 'false') <CR> :call AddSymbs(getline('.')) <CR>
+    nnoremap <buffer><silent>r :call DelSymbs(getline('.'), 'false') <CR> :call SynchronizeSource(getline('.')) <CR>:call AddSymbs(getline('.')) <CR>
     nnoremap <buffer><silent>q :close!<CR>
 endfunction
 "}}}
 
 "-----------------------------------------------------------------
 "Synchronize source
-function! SynchronizeSource ()
-    let l:l = MakeList (getcwd ())
+function! SynchronizeSource (dir)
+    let l:l = MakeList (a:dir)
     if (empty(l:l))
-        let l:output_msg = 'There is no any files found in patten:'
-        for l:idx in s:postfix
+        let l:output_msg = 'There is no any files found in pattern:'
+        for l:idx in g:ccve_patterns
             let l:output_msg = l:output_msg . ' ' . '[' . l:idx . ']'
         endfor
         echomsg l:output_msg
         return 'false'
     endif
 
-    let l:res_t = ExecCtags (l:l)
+    let l:res_t = ExecCtags (a:dir, l:l)
     if l:res_t  == 'false'
         echomsg 'Failed to generate ctags database.'
     endif
 
-    let l:res_c = ExecCscope (l:l)
+    let l:res_c = ExecCscope (a:dir, l:l)
     if l:res_c == 'false'
         echomsg 'Failed to generate cscope database.'
     endif
 
     if l:res_t == 'true' || l:res_c == 'true'
         "echo s:ccve_vars[s:os]['env_f']
-        call WriteConfig (s:ccve_vars[s:os]['env_f'], getcwd ())
+        call WriteConfig (s:ccve_vars[s:os]['env_f'], a:dir)
     endif
 endfunction
 
@@ -637,8 +636,9 @@ function! TestFuncE ()
 endfunction
 
 function! TestFuncS ()
-    call SynchronizeSource ()
-    call AddSymbs (getcwd ())
+	let l:dir = getcwd()
+    call SynchronizeSource (l:dir)
+    call AddSymbs (l:dir)
 endfunction
 
 
