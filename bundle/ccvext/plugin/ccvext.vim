@@ -584,7 +584,8 @@ function! EnvConfig (l)
     nnoremap <buffer><silent><CR> :call AddSymbs(getline('.')) <CR>
     nnoremap <buffer><silent>d :call DelSymbs(getline('.'), 'false') <CR>
     nnoremap <buffer><silent>D :call DelSymbs(getline('.'), 'true') <CR>
-    "nnoremap <buffer><silent><ESC> :close!<CR>
+    nnoremap <buffer><silent>r :call DelSymbs(getline('.'), 'false') <CR> :call AddSymbs(getline('.')) <CR>
+    nnoremap <buffer><silent>q :close!<CR>
 endfunction
 "}}}
 
