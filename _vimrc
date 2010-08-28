@@ -165,3 +165,27 @@ let OmniCpp_LocalSearchDecl=1
 set completeopt=menu,longest
 
 let g:DrChipTopLvlMenu= "&Plugin.&DrChip."
+
+" select last yanked/pasted text
+nnoremap gp `[v`]
+" redo and go back to beginning of changed text
+nmap . .`[
+
+python <<EOL
+from math import *
+import struct
+def pyFloat2Hex(val):
+	print "0x%02x%02x%02x%02x" %(tuple(reversed(struct.unpack('4B', struct.pack('f', val)) )))
+def pyHex2Float(val):
+	print struct.unpack('f', struct.pack('i', val))[0]
+EOL
+
+function! Hex2Float(arg)
+python <<EOL
+import vim
+print vim.eval("a:arg")
+print struct.pack('i', vim.eval("a:arg"))
+EOL
+endfunction
+
+"1.1 2.1 3.1
