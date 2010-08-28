@@ -386,7 +386,7 @@ function! ExecCtags (dir, list)
                 \. s:ccve_vars[s:os]['slash'] 
                 \. substitute(a:dir, '^.*' . s:ccve_vars[s:os]['slash'], '', 'g') 
                 \. s:ccve_vars[s:os]['slash'] . 'tags ' 
-                \. '-R --c++-kinds=+p --fields=+aiS --extra=+q --tag-relative=no' 
+                \. '-R --c++-kinds=+pxl --fields=+aiS --extra=+q --tag-relative=no' 
                 \. ' -L ' 
                 \. s:ccve_vars[s:os]['list_f']
 

@@ -156,4 +156,12 @@ map <C-S-Tab> <ESC>:tabp<cr>
 ":%!xxd -r<CR>
 "
 ":perldo $_ = join ' ', reverse split
-"
+
+let OmniCpp_ShowAccess=0
+let OmniCpp_ShowPrototypeInAbbr = 1
+"let OmniCpp_MayCompleteScope = 0
+"let OmniCpp_SelectFirstItem = 1
+let OmniCpp_LocalSearchDecl=1
+set completeopt=menu,longest
+
+let g:DrChipTopLvlMenu= "&Plugin.&DrChip."
