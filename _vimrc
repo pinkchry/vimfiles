@@ -171,21 +171,27 @@ nnoremap gp `[v`]
 " redo and go back to beginning of changed text
 nmap . .`[
 
+function! Float2Hex(arg)
 python <<EOL
-from math import *
+import vim
 import struct
-def pyFloat2Hex(val):
-	print "0x%02x%02x%02x%02x" %(tuple(reversed(struct.unpack('4B', struct.pack('f', val)) )))
-def pyHex2Float(val):
-	print struct.unpack('f', struct.pack('i', val))[0]
+floatval = float(vim.eval("a:arg"))
+intval = "0x%02x%02x%02x%02x" %(tuple(reversed(struct.unpack('4B', struct.pack('f', floatval)) )))
+vim.command("let l:retval = \"{0}\"".format(intval))
 EOL
+return l:retval
+endfunction
 
 function! Hex2Float(arg)
 python <<EOL
 import vim
-print vim.eval("a:arg")
-print struct.pack('i', vim.eval("a:arg"))
+import struct
+intval = int(vim.eval("a:arg"), 16)
+floatval = struct.unpack('f', struct.pack('i', intval))[0]
+vim.command("let l:retval = {0}".format(floatval))
 EOL
+return l:retval
 endfunction
 
-"1.1 2.1 3.1
+
+"0x3f8ccccd 0x40066666 0x40466666
