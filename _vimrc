@@ -165,6 +165,7 @@ let OmniCpp_LocalSearchDecl=1
 set completeopt=menu,longest
 
 let g:DrChipTopLvlMenu= "&Plugin.&DrChip."
+let g:completekey = "<C-Space>"
 
 " select last yanked/pasted text
 nnoremap gp `[v`]
