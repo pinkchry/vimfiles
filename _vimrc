@@ -106,8 +106,20 @@ endfunction
 augroup QFixToggle
  autocmd!
  autocmd BufWinEnter quickfix let g:qfix_win = bufnr("$")
+ autocmd BufWinEnter quickfix map q :cclose<CR>
  autocmd BufWinLeave * if exists("g:qfix_win") && expand("<abuf>") == g:qfix_win | unlet! g:qfix_win | endif
 augroup END
+
+
+" Automatically close preview window when not needed anymore
+autocmd InsertLeave * call AutoClosePreviewWindow()
+autocmd CursorMovedI * call AutoClosePreviewWindow()
+
+function! AutoClosePreviewWindow()
+	if !&l:previewwindow
+		pclose
+	endif
+endfunction
 
 
 " With a map leader it's possible to do extra key combinations
@@ -119,6 +131,7 @@ nmap <silent> <F2> :NERDTreeToggle<CR>
 nmap <silent> <F4> :QFix<CR>
 nmap <silent> <F7> :call DTEBuildSolution()<CR>
 nmap <silent> <C-F7> :call DTECompileFile()<CR>:cclose<CR>
+nmap <script> <silent> <unique> <F3> :BufExplorer<CR>
 
 map <leader>fr :FufFile **/<CR>
 map <leader>ff :FufFile <CR>
@@ -142,8 +155,8 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 map <M-down> <C-W>j
 map <M-up> <C-W>k
-map <M-left> <ESC>:bp<cr>
-map <M-right> <ESC>:bn<cr>
+map <M-left> <ESC>:BB<cr>
+map <M-right> <ESC>:BF<cr>
 map <C-Up> <Plug>unimpairedQPrevious
 map <C-Down> <Plug>unimpairedQNext
 
@@ -172,6 +185,7 @@ nnoremap gp `[v`]
 " redo and go back to beginning of changed text
 nmap . .`[
 
+"0x3f8ccccd 0x40066666 0x40466666
 function! Float2Hex(arg)
 python <<EOL
 import vim
@@ -196,4 +210,3 @@ endfunction
 
 let g:ackprg= expand("$VIM") . "\\vimfiles\\bin\\ack -H --nocolor --nogroup --column"
 
-"0x3f8ccccd 0x40066666 0x40466666
