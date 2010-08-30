@@ -129,6 +129,7 @@ let g:mapleader = ","
 
 nmap <silent> <F2> :NERDTreeToggle<CR>
 nmap <silent> <F4> :QFix<CR>
+nmap <silent> <F12> <C-]>
 nmap <silent> <F7> :call DTEBuildSolution()<CR>
 nmap <silent> <C-F7> :call DTECompileFile()<CR>:cclose<CR>
 nmap <script> <silent> <unique> <F3> :BufExplorer<CR>
