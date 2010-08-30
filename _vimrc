@@ -194,5 +194,6 @@ EOL
 return l:retval
 endfunction
 
+let g:ackprg= expand("$VIM") . "\\vimfiles\\bin\\ack -H --nocolor --nogroup --column"
 
 "0x3f8ccccd 0x40066666 0x40466666
