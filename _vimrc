@@ -88,7 +88,7 @@ else
   set background=dark
 endif
 
-"autocmd BufWritePre *.* :%s/$//e
+autocmd BufWritePre *.* :%s/$//e
 
 " quickfix
 let qfix_toggle=12
@@ -217,4 +217,5 @@ EOL
 return l:retval
 endfunction
 
+"let g:ackprg= "\"".expand("$VIM") . "\\vimfiles\\bin\\ack -H --nocolor --nogroup --column\""
 
