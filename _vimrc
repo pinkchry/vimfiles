@@ -138,8 +138,8 @@ map <leader>fr :FufFile **/<CR>
 map <leader>ff :FufFile <CR>
 map <leader>fb :FufBuffer <CR>
 map <leader>fl :FufLine <CR>
-map <leader>fm :FufMruFile <CR>
-map <leader>f: :FufMruCmd <CR>
+"map <leader>fm :FufMruFile <CR>
+"map <leader>f: :FufMruCmd <CR>
 map <leader>fc :FufChangeList<CR>
 map <leader>fj :FufJumpList<CR>
 map <leader>fq :FufQuickfix<CR>
@@ -208,6 +208,4 @@ vim.command("let l:retval = {0}".format(floatval))
 EOL
 return l:retval
 endfunction
-
-let g:ackprg= expand("$VIM") . "\\vimfiles\\bin\\ack -H --nocolor --nogroup --column"
 
