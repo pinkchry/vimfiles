@@ -311,7 +311,7 @@ function! s:UpdateTags(boolAppend)
          endfor
       else
          for l:sFile in s:lFileList
-            let l:sFiles = l:sFiles.' "'.l:sFile.'"'
+            let l:sFiles = l:sFiles.' '.l:sFile
          endfor
       endif
    endif
@@ -321,8 +321,10 @@ function! s:UpdateTags(boolAppend)
          let l:sTagsFile = '"'.l:sTagsFile.'"'
       "endif
 
+	  let l:listFile = s:tagsDirname.'/.list'
+	  call writefile (split(l:sFiles), l:listFile)
       if (has('win32') || has('win64'))
-         let l:cmd = 'ctags -f '.l:sTagsFile.' '.l:sRecurseCode.' '.l:sAppendCode.' '.g:indexer_ctagsCommandLineOptions.' '.l:sFiles
+         let l:cmd = 'ctags -f '.l:sTagsFile.' '.l:sRecurseCode.' '.l:sAppendCode.' '.g:indexer_ctagsCommandLineOptions.' -L "'.l:listFile.'"'
       else
          let l:cmd = 'ctags -f '.l:sTagsFile.' '.l:sRecurseCode.' '.l:sAppendCode.' '.g:indexer_ctagsCommandLineOptions.' '.l:sFiles.' &'
       endif
