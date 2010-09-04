@@ -8,7 +8,7 @@ set history=300
 filetype plugin on
 filetype indent on
 
-set autochdir " always switch to the current file directory
+"set autochdir " always switch to the current file directory
 
 " Set to auto read when a file is changed from the outside
 set autoread
