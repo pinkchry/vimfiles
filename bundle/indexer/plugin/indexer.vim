@@ -322,7 +322,7 @@ function! s:UpdateTags(boolAppend)
       "endif
 
 	  let l:listFile = s:tagsDirname.'/.list'
-	  call writefile (split(l:sFiles), l:listFile)
+	  call writefile (s:lFileList, l:listFile)
       if (has('win32') || has('win64'))
          let l:cmd = 'ctags -f '.l:sTagsFile.' '.l:sRecurseCode.' '.l:sAppendCode.' '.g:indexer_ctagsCommandLineOptions.' -L "'.l:listFile.'"'
       else
