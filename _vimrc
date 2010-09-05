@@ -164,6 +164,15 @@ map <C-Down> <Plug>unimpairedQNext
 map <C-Tab> <ESC>:tabn<cr>
 map <C-S-Tab> <ESC>:tabp<cr>
 
+inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
+inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
+
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabMappingBackward = '<Tab>'
+let g:SuperTabMappingForward = '<C-Tab>'
+let g:SuperTabCrMapping = 0
+
 "Tips
 "Hex editor
 "::set binary<CR>:%!xxd<CR>
