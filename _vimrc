@@ -132,7 +132,7 @@ nmap <silent> <F4> :QFix<CR>
 nmap <silent> <F12> <C-]>
 nmap <silent> <F7> :call DTEBuildSolution()<CR>
 nmap <silent> <C-F7> :call DTECompileFile()<CR>:cclose<CR>
-nmap <script> <silent> <unique> <F3> :BufExplorer<CR>
+nmap <silent> <F3> :BufExplorer<CR>
 
 map <leader>fr :FufFile **/<CR>
 map <leader>ff :FufFile <CR>
@@ -158,8 +158,8 @@ map <M-down> <C-W>j
 map <M-up> <C-W>k
 map <M-left> <ESC>:BB<cr>
 map <M-right> <ESC>:BF<cr>
-map <C-Up> <Plug>unimpairedQPrevious
-map <C-Down> <Plug>unimpairedQNext
+map <C-Up> <ESC>:cp<cr>
+map <C-Down> <ESC>:cn<cr> 
 
 map <C-Tab> <ESC>:tabn<cr>
 map <C-S-Tab> <ESC>:tabp<cr>
