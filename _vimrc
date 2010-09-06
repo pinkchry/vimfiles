@@ -168,6 +168,11 @@ inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr> <Tab>      pumvisible() ? "\<C-y>" : "\<CR>"
 
+nmap <silent> <Leader>cd :cd %:p:h<CR>
+command! CD cd %:p:h
+command! LCD lcd %:p:h
+
+
 "Tips
 "Hex editor
 "::set binary<CR>:%!xxd<CR>
@@ -183,7 +188,6 @@ let OmniCpp_LocalSearchDecl=1
 set completeopt=menu,longest
 
 let g:DrChipTopLvlMenu= "&Plugin.&DrChip."
-let g:completekey = "<C-Space>"
 
 " select last yanked/pasted text
 nnoremap gp `[v`]
@@ -212,4 +216,5 @@ vim.command("let l:retval = {0}".format(floatval))
 EOL
 return l:retval
 endfunction
+
 
