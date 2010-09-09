@@ -84,7 +84,7 @@ endif
 "let g:ccve_patterns = ['"*.py"']
 "let g:ccve_patterns = ['"*.html"', '"*.xml"']
 "let g:ccve_patterns = ['"*.java"', '"*.h"', '"*.c"', '"*.hpp"', '"*.cpp"', '"*.cc"']
-let g:ccve_patterns = ['"*.java"', '"*.py"', '"*.h"', '"*.c"', '"*.hpp"', '"*.cpp"', '"*.cc"']
+let g:ccve_patterns = ['"*.java"', '"*.inl"', '"*.h"', '"*.c"', '"*.hpp"', '"*.cpp"', '"*.cc"']
 
 "Exame software environment {{{
 if !executable ('ctags')

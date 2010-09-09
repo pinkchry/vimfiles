@@ -168,6 +168,8 @@ inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr> <Tab>      pumvisible() ? "\<C-y>" : "\<CR>"
 
+nnoremap <leader>z :setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldcolumn=2<CR>
+
 nmap <silent> <Leader>cd :cd %:p:h<CR>
 command! CD cd %:p:h
 command! LCD lcd %:p:h
