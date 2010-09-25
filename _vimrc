@@ -69,7 +69,7 @@ set cscopequickfix=s-,g-,c-,d-,i-,t-,e-
 
 set statusline=%F%m%r%h%w\ [fmt=%{&ff}]\ [type=%Y]\ [pos=%l,%v][%p%%]
 set guifont=Consolas:h10:cANSI
-
+set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,ex:*/,://
 
 " No sound on errors
 set noerrorbells
@@ -174,6 +174,7 @@ nmap <silent> <Leader>cd :cd %:p:h<CR>
 command! CD cd %:p:h
 command! LCD lcd %:p:h
 
+nmap <leader>dc :Dox<CR>
 
 "Tips
 "Hex editor
